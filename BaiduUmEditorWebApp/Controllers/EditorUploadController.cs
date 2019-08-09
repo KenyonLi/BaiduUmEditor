@@ -68,14 +68,21 @@ namespace BaiduUmEditorWebApp.Controllers
                 case "listfile":
                     _action = new ListFileManager(context, Config.GetString("fileManagerListPath"), Config.GetStringList("fileManagerAllowFiles"));
                     break;
+                case "listvideo":
+                    _action = new ListFileManager(context, Config.GetString("videoManagerListPath"), Config.GetStringList("videoManagerAllowFiles"));
+                    break;
                 case "catchimage":
                     _action = new CrawlerHandler(context);
+                    break;
+
+                case "deletefile":
+                    _action = new DeleteFileHandler(context); //删除文件
                     break;
                 default:
                     _action = new NotSupportedHandler(context);
                     break;
             }
-            _action.Process();
+            _action.Process(); //执行方法
         }
     }
 }

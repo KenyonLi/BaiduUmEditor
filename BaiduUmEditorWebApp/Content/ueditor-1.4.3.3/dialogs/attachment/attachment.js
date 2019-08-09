@@ -703,6 +703,38 @@
 
                     item.appendChild(preview);
                     item.appendChild(icon);
+
+                    /* 添加删除功能 Start*/
+                    item.appendChild($("<span class='delbtn' url='" + list[i].url + "'>X</span>").click(function () {
+                        var del = $(this);
+                        try {
+                            window.event.cancelBubble = true; //停止冒泡
+                            window.event.returnValue = false; //阻止事件的默认行为
+                            window.event.preventDefault();    //取消事件的默认行为  
+                            window.event.stopPropagation();   //阻止事件的传播
+                        } finally {
+                            layer.confirm('确定要删除吗？', {
+                                btn: ['确定', '取消'] //按钮
+                            }, function () {
+                                layer.closeAll();
+                                $.post(editor.getOpt("serverUrl") + "?action=deletefile", { "path": del.attr("url") }, function (responseText) {
+                                    json = utils.str2json(responseText); //序列化json对象
+                                    if (json.state == 'SUCCESS') {
+                                        layer.msg("删除成功", { icon: 6 });
+                                        del.parent().remove();
+                                    }
+                                    else {
+                                        layer.msg("删除失败", { icon: 5 });
+                                        layer.alter(responseText);
+                                    }
+
+                                });
+                            }, function () {
+                                layer.closeAll();
+                            });
+                        }
+                    })[0]);
+                    /* 添加删除功能 End*/
                     this.list.insertBefore(item, this.clearFloat);
                 }
             }
