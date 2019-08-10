@@ -75,16 +75,6 @@
             createPreviewVideo(url);
         })();
     }
-
-    //在线管理
-    function addOnlineListener() {
-
-
-        $("#lang_tab_online").on("click", function () {
-            console.log("fdfdfdfd111");
-            onlineVideo.reset();
-        });
-    }
     /**
      * 监听确认和取消两个按钮事件，用户执行插入或者清空正在播放的视频实例操作
      */
@@ -103,7 +93,8 @@
                     return insertUpload();
                     break;
                 case "online":
-                    return insertSearch("videoList");
+                    var list = onlineVideo.getInsertList("videoList");
+                    return editor.execCommand('insertvideo', list);
                     break;
             }
         };
@@ -1018,19 +1009,18 @@
             }
         },
         getInsertList: function () {
-            var i, lis = this.list.children, list = [], align = getAlign();
+            var i, lis = this.list.children, list = [];
             for (i = 0; i < lis.length; i++) {
                 if (domUtils.hasClass(lis[i], 'selected')) {
-                    var img = lis[i].firstChild,
-                        src = img.getAttribute('_src');
+                    var url = lis[i].getAttribute('data-url');
+                    var title = lis[i].getAttribute('data-title') || url.substr(url.lastIndexOf('/') + 1);
                     list.push({
-                        src: src,
-                        _src: src,
-                        alt: src.substr(src.lastIndexOf('/') + 1),
-                        floatStyle: align
+                        url: url,
+                        width: 420,
+                        height: 280,
+                        align: "none"
                     });
                 }
-
             }
             return list;
         }

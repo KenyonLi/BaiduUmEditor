@@ -50,11 +50,11 @@ UE.plugins['video'] = function () {
                 //参考处理资源 https://www.cnblogs.com/beyonds/p/8988207.html  处理mp3
                 if (ext == 'mp3') {
                     str = '<audio' + (id ? ' id="' + id + '"' : '') + ' class=" audio-js" ' + (align ? ' style="float:' + align + '"' : '') +
-                        '  controls preload="none" width="' + width + '" height="' + height + '" src="' + url + '">" /></audio>';
+                        '  controls="controls"  controlsList="nodownload" preload="none" width="' + width + '" height="' + height + '" src="' + url + '">" /></audio>&nbsp;';
                 } else {
                     str = '<video' + (id ? ' id="' + id + '"' : '') + ' class="' + classname + ' video-js" ' + (align ? ' style="float:' + align + '"' : '') +
-                        ' controls="controls"    controlsList=" nodownload noremote footbar" preload="none" width="' + width + '" height="' + height + '" src="' + url + '" data-setup="{}">' +
-                        '<source src="' + url + '" type="video/' + ext + '" /></video>';
+                        ' controls="controls"  controlsList="nodownload" preload="none" width="' + width + '" height="' + height + '" src="' + url + '" data-setup="{}">' +
+                        '<source src="' + url + '" type="video/' + ext + '" /></video>&nbsp;';
                 }
                 break;
         }
@@ -160,7 +160,7 @@ UE.plugins['video'] = function () {
                 html.push(creatInsertStr(vi.url, vi.width || 420, vi.height || 280, id + i, null, cl, 'video'));
             }
             me.execCommand("inserthtml", html.join(""), true);
-            var rng = this.selection.getRange();
+            //var rng = this.selection.getRange();
             //注释以下代码
             //for(var i= 0,len=videoObjs.length;i<len;i++){
             //    var img = this.document.getElementById('tmpVedio'+i);
