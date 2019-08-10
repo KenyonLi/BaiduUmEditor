@@ -1,6 +1,0 @@
-D:\Test\BaiduEditor.Core\bin\Debug\netstandard2.0\BaiduEditor.Core.deps.json
-D:\Test\BaiduEditor.Core\bin\Debug\netstandard2.0\BaiduEditor.Core.dll
-D:\Test\BaiduEditor.Core\obj\Debug\netstandard2.0\BaiduEditor.Core.csprojAssemblyReference.cache
-D:\Test\BaiduEditor.Core\obj\Debug\netstandard2.0\BaiduEditor.Core.csproj.CoreCompileInputs.cache
-D:\Test\BaiduEditor.Core\obj\Debug\netstandard2.0\BaiduEditor.Core.AssemblyInfoInputs.cache
-D:\Test\BaiduEditor.Core\obj\Debug\netstandard2.0\BaiduEditor.Core.AssemblyInfo.cs
