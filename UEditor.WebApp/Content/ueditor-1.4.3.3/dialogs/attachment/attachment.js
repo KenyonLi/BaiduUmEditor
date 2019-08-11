@@ -37,6 +37,11 @@
             if (bodyId == id) {
                 domUtils.addClass(tabs[i], 'focus');
                 domUtils.addClass($G(bodyId), 'focus');
+                //在线管理事件
+                if (bodyId == "online") {
+                    onlineFile = new OnlineFile('fileList');
+                    onlineFile.reset();
+                }
             } else {
                 domUtils.removeClasses(tabs[i], 'focus');
                 domUtils.removeClasses($G(bodyId), 'focus');
@@ -624,6 +629,11 @@
             /* 第一次拉取数据 */
             this.getFileData();
         },
+        /* 重置界面 */
+        reset: function () {
+            this.initContainer();
+            this.initData();
+        },
         /* 向后台拉取图片列表数据 */
         getFileData: function () {
             var _this = this;
@@ -717,7 +727,7 @@
                                 btn: ['确定', '取消'] //按钮
                             }, function () {
                                 layer.closeAll();
-                                $.post(editor.getOpt("serverUrl") + "?action=deletefile", { "path": del.attr("url") }, function (responseText) {
+                                    $.post(editor.getActionUrl("deletefile"), { "path": del.attr("url") }, function (responseText) {
                                     json = utils.str2json(responseText); //序列化json对象
                                     if (json.state == 'SUCCESS') {
                                         layer.msg("删除成功", { icon: 6 });

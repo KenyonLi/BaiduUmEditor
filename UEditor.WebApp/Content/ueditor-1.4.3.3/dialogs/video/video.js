@@ -959,7 +959,7 @@
                                 btn: ['确定', '取消'] //按钮
                             }, function () {
                                 layer.closeAll();
-                                $.post(editor.getOpt("serverUrl") + "?action=deletefile", { "path": del.attr("url") }, function (responseText) {
+                                    $.post(editor.getActionUrl("deletefile"), { "path": del.attr("url") }, function (responseText) {
                                     json = utils.str2json(responseText); //序列化json对象
                                     if (json.state == 'SUCCESS') {
                                         layer.msg("删除成功", { icon: 6 });
