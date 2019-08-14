@@ -34,9 +34,10 @@
                     if (tabs[j] == target) {
                         domUtils.addClass(tabs[j], 'focus');
                         domUtils.addClass($G(bodyId), 'focus');
+                        console.log(bodyId);
                         //在线管理事件
                         if (bodyId == "online") {
-                            onlineVideo = new OnlineVideo('videoList');
+                            onlineVideo = onlineVideo || new OnlineVideo('videoList');
                             onlineVideo.reset();
                         }
                     } else {
@@ -806,8 +807,9 @@
     }
     OnlineVideo.prototype = {
         init: function () {
-            this.reset();
+            this.initContainer();
             this.initEvents();
+            this.initData();
         },
         /* 初始化容器 */
         initContainer: function () {
@@ -836,11 +838,19 @@
             domUtils.on(this.container, 'click', function (e) {
                 var target = e.target || e.srcElement,
                     li = target.parentNode;
-
+                console.log(li);
+                console.log("选中视频");
+                console.log(li.tagName.toLowerCase());
                 if (li.tagName.toLowerCase() == 'li') {
+                    console.log(0);
+                    console.log(li.tagName.toLowerCase());
+
                     if (domUtils.hasClass(li, 'selected')) {
+                        console.log(1);
                         domUtils.removeClasses(li, 'selected');
                     } else {
+                        console.log(2);
+
                         domUtils.addClass(li, 'selected');
                     }
                 }
@@ -860,8 +870,8 @@
         },
         /* 重置界面 */
         reset: function () {
-            this.initContainer();
-            this.initData();
+            console.log("reset");
+            this.init();
         },
         /* 向后台拉取图片列表数据 */
         getVideoData: function () {
@@ -959,7 +969,7 @@
                                 btn: ['确定', '取消'] //按钮
                             }, function () {
                                 layer.closeAll();
-                                    $.post(editor.getActionUrl("deletefile"), { "path": del.attr("url") }, function (responseText) {
+                                $.post(editor.getActionUrl("deletefile"), { "path": del.attr("url") }, function (responseText) {
                                     json = utils.str2json(responseText); //序列化json对象
                                     if (json.state == 'SUCCESS') {
                                         layer.msg("删除成功", { icon: 6 });
