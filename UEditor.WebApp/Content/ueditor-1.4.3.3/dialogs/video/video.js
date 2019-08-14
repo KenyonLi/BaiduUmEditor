@@ -809,7 +809,6 @@
         init: function () {
             this.initContainer();
             this.initEvents();
-            this.initData();
         },
         /* 初始化容器 */
         initContainer: function () {
@@ -838,19 +837,10 @@
             domUtils.on(this.container, 'click', function (e) {
                 var target = e.target || e.srcElement,
                     li = target.parentNode;
-                console.log(li);
-                console.log("选中视频");
-                console.log(li.tagName.toLowerCase());
                 if (li.tagName.toLowerCase() == 'li') {
-                    console.log(0);
-                    console.log(li.tagName.toLowerCase());
-
                     if (domUtils.hasClass(li, 'selected')) {
-                        console.log(1);
                         domUtils.removeClasses(li, 'selected');
                     } else {
-                        console.log(2);
-
                         domUtils.addClass(li, 'selected');
                     }
                 }
@@ -870,8 +860,8 @@
         },
         /* 重置界面 */
         reset: function () {
-            console.log("reset");
-            this.init();
+            this.initContainer();
+            this.initData();
         },
         /* 向后台拉取图片列表数据 */
         getVideoData: function () {
