@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -77,7 +79,7 @@ namespace UEditor.Core
                     return this;
                 }
                 //修改原url 
-                ServerUrl = PathFormatter.Format(this.SourceUrl, Config.GetString("catcherPathFormat"));
+                ServerUrl = PathFormatter.Format(".jpg", Config.GetString("catcherPathFormat"));
                 var savePath = Server.MapPath(ServerUrl);
                 if (!Directory.Exists(Path.GetDirectoryName(savePath)))
                 {
@@ -86,19 +88,23 @@ namespace UEditor.Core
                 try
                 {
                     var stream = response.GetResponseStream();
-                    var reader = new BinaryReader(stream);
-                    byte[] bytes;
-                    using (var ms = new MemoryStream())
-                    {
-                        byte[] buffer = new byte[4096];
-                        int count;
-                        while ((count = reader.Read(buffer, 0, buffer.Length)) != 0)
-                        {
-                            ms.Write(buffer, 0, count);
-                        }
-                        bytes = ms.ToArray();
-                    }
-                    File.WriteAllBytes(savePath, bytes);
+                    Image img = Image.FromStream(stream);
+                    img.Save(savePath, ImageFormat.Jpeg);
+                    img.Dispose();
+                    //var reader = new BinaryReader(stream);
+                    //byte[] bytes;
+                    //using (var ms = new MemoryStream())
+                    //{
+                    //    byte[] buffer = new byte[4096];
+                    //    int count;
+                    //    while ((count = reader.Read(buffer, 0, buffer.Length)) != 0)
+                    //    {
+                    //        ms.Write(buffer, 0, count);
+                    //    }
+                    //    bytes = ms.ToArray();
+                      
+                    //}
+                    //File.WriteAllBytes(savePath, bytes);
                     State = "SUCCESS";
                 }
                 catch (Exception e)
